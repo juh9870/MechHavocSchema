@@ -1,0 +1,24 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"type": {
+			"type": "integer",
+			"title": "Determines the module group type",
+			"description": "0 = Body,\n1 = Chassis,\n2 = Armor,\n3 = Systems,\n4 = WeaponSystems,\n5 = Mount"
+		},
+		"slots": {
+			"type": "integer",
+			"title": "The amount of modules that can be equipped to this module group"
+		},
+		"previewPosition": {
+			"type": "Vector2",
+			"title": "UI preview position in the loadout screen"
+		}
+	},
+	"required": [
+		"type",
+		"slots",
+		"previewPosition"
+	]
+}

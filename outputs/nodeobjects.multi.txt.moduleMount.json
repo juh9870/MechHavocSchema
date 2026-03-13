@@ -1,0 +1,28 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"enabled": {
+			"type": "boolean"
+		},
+		"mountId": {
+			"type": "integer",
+			"title": "The index of the moduleGroup defined in \"vehicleModules\""
+		},
+		"slotId": {
+			"type": "integer",
+			"title": "The index of the module slot",
+			"description": "Can be left at 0 in most cases, unless the relevant module group has more than 1 slot"
+		},
+		"sortingOrder": {
+			"type": "integer",
+			"title": "Similar to sprite sorting order."
+		}
+	},
+	"required": [
+		"enabled",
+		"mountId",
+		"slotId",
+		"sortingOrder"
+	]
+}

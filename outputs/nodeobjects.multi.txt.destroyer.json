@@ -1,0 +1,23 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"enabled": {
+			"type": "boolean"
+		},
+		"radius": {
+			"type": "number",
+			"title": "Destruction radius"
+		},
+		"force": {
+			"type": "number",
+			"title": "Destruction strength",
+			"description": "If destruction will happen, and the exact radius size is based, in part, on the destroyer's force, and the destructible's resistance."
+		}
+	},
+	"required": [
+		"enabled",
+		"radius",
+		"force"
+	]
+}

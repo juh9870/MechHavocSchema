@@ -1,0 +1,62 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"name": {
+			"type": "string",
+			"title": "Sprite name",
+			"description": "Mainly for your own sanity"
+		},
+		"usedForCollider": {
+			"type": "boolean",
+			"title": "Whether a collider should use this sprite's shape as a reference."
+		},
+		"usedForSteeringWheel": {
+			"type": "boolean",
+			"title": "Whether this sprite should act as a \"steering wheel\", rotating toward your steering direction",
+			"description": "Only relevant when using the wheeledController"
+		},
+		"localPosition": {
+			"type": "Vector2",
+			"title": "Position, relative to parent node."
+		},
+		"localRotation": {
+			"type": "number",
+			"title": "Rotation relative to parent node."
+		},
+		"localScale": {
+			"type": "Vector2",
+			"title": "Scale relative to parent node."
+		},
+		"spritePath": {
+			"type": "string",
+			"title": "PNG file name in the mod's folder."
+		},
+		"color": {
+			"type": "Color",
+			"title": "Change the sprite color.",
+			"description": "Optional.\nMost commonly used for \"energySprites\", such as a bright cockpit. That are by default white and have their material set to 1. Color is then used to tweak the energy color."
+		},
+		"sortingOrder": {
+			"type": "integer",
+			"title": "The sprite sorting order. Higher gets rendered above lower."
+		},
+		"material": {
+			"type": "integer",
+			"title": "sprite material",
+			"description": "0 = default,\n1 = glow material,"
+		}
+	},
+	"required": [
+		"name",
+		"usedForCollider",
+		"usedForSteeringWheel",
+		"localPosition",
+		"localRotation",
+		"localScale",
+		"spritePath",
+		"color",
+		"sortingOrder",
+		"material"
+	]
+}

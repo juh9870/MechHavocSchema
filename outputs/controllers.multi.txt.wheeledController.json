@@ -1,0 +1,30 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"engineForce": {
+			"type": "number",
+			"title": "Same as mechController"
+		},
+		"turnForce": {
+			"type": "number",
+			"title": "same as trackedController"
+		},
+		"driftFactor": {
+			"type": "number",
+			"title": "Modifier of vehicle velocity to the left or right. Setting it at 0 will result in a vehicle that only moves in its steering direction. While a value of 1 will result in a slidey car",
+			"description": "0.99 is a good default value. Should stick between 0 and 1, unless you want some interesting bugs."
+		},
+		"engineAudioVolume": {
+			"type": "number",
+			"title": "Audio volume of the vehicle's engine sound",
+			"description": "Advised to keep this between 0 and 1"
+		}
+	},
+	"required": [
+		"engineForce",
+		"turnForce",
+		"driftFactor",
+		"engineAudioVolume"
+	]
+}

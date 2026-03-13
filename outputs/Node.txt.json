@@ -1,0 +1,101 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"name": {
+			"type": "string",
+			"title": "Node name",
+			"description": "Mainly for your own sanity"
+		},
+		"usedForSteeringWheel": {
+			"type": "boolean",
+			"title": "Whether this node should act as a \"steering wheel\", rotating toward your steering direction",
+			"description": "Only relevant when using the wheeledController"
+		},
+		"localPosition": {
+			"type": "Vector2",
+			"title": "Position, relative to parent node."
+		},
+		"localRotation": {
+			"type": "number",
+			"title": "Rotation relative to parent node."
+		},
+		"localScale": {
+			"type": "Vector2",
+			"title": "Scale relative to parent node."
+		},
+		"sortingGroup": {
+			"type": "integer",
+			"title": "SortingGroup order. Higher gets rendered above lower.",
+			"description": "Optional. Should generally only be defined for the root node."
+		},
+		"sprites": {
+			"type": "array of sprite",
+			"title": "Visuals attached to this sprite (see sprite below).",
+			"description": "Optional"
+		},
+		"trailRenderers": {
+			"type": "array of trailRenderer",
+			"title": "Visual effect",
+			"description": "Optional"
+		},
+		"particleEmitters": {
+			"type": "array of particleEmitter",
+			"title": "Visual effect",
+			"description": "Optional"
+		},
+		"turret": {
+			"type": "object",
+			"title": "Turret handler, will rotate the node towards your aimpoint.",
+			"description": "Optional"
+		},
+		"weaponMount": {
+			"type": "object",
+			"title": "Where a weapon is spawned for a given \"weaponSlots\" index.",
+			"description": "Optional. Index count starts at 0."
+		},
+		"moduleMount": {
+			"type": "object",
+			"title": "Used for spawning equipped module objects. Similar to the weaponMount.",
+			"description": "Optional. Index count starts at 0.\nOnly relevant for modules of the \"Mounted\" type, as other modules don't require a spawned object."
+		},
+		"hasCollider": {
+			"type": "boolean",
+			"title": "Set to true if a collider should be added to this node. Must also contain a sprite with usedForCollider set to true.",
+			"description": "Optional"
+		},
+		"collisionDamage": {
+			"type": "object",
+			"title": "Collision damage settings",
+			"description": "Optional. Should also have hasCollider set to true."
+		},
+		"destroyer": {
+			"type": "object",
+			"title": "Handles destruction of wall on collision.",
+			"description": "Optional. Should also have collisionDamage set to function properly."
+		},
+		"childrenNodes": {
+			"type": "array",
+			"title": "An array of child nodes (recursive).",
+			"description": "Optional"
+		}
+	},
+	"required": [
+		"name",
+		"usedForSteeringWheel",
+		"localPosition",
+		"localRotation",
+		"localScale",
+		"sortingGroup",
+		"sprites",
+		"trailRenderers",
+		"particleEmitters",
+		"turret",
+		"weaponMount",
+		"moduleMount",
+		"hasCollider",
+		"collisionDamage",
+		"destroyer",
+		"childrenNodes"
+	]
+}

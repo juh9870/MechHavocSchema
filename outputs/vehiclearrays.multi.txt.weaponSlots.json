@@ -1,0 +1,29 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"allowedTypes": {
+			"type": "int[]",
+			"title": "Allowed weapon types",
+			"description": "0 = Ballistic,\n1 = Rocket,\n2 = Experimental"
+		},
+		"allowedSize": {
+			"type": "int[]",
+			"title": "Allowed weapon sizes",
+			"description": "0 = Portable,\n1 = Small,\n2 = Medium,\n3 = Large,\n4 = Titan"
+		},
+		"modifiers": {
+			"type": "array"
+		},
+		"previewPosition": {
+			"type": "Vector2",
+			"title": "UI preview position in the loadout screen"
+		}
+	},
+	"required": [
+		"allowedTypes",
+		"allowedSize",
+		"modifiers",
+		"previewPosition"
+	]
+}

@@ -1,0 +1,28 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"enabled": {
+			"type": "boolean"
+		},
+		"collisionDamage": {
+			"type": "boolean",
+			"title": "If true, collisions can deal damage"
+		},
+		"collisionDestruction": {
+			"type": "boolean",
+			"title": "If true, collision can destroy walls",
+			"description": "Also requires a \"destroyer\""
+		},
+		"damageModifier": {
+			"type": "number",
+			"title": "Multiplier on collision damage"
+		}
+	},
+	"required": [
+		"enabled",
+		"collisionDamage",
+		"collisionDestruction",
+		"damageModifier"
+	]
+}

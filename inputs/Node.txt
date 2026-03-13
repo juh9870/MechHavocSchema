@@ -1,0 +1,79 @@
+ Node
+Key
+Type
+Summary
+Notes
+"name"
+string
+Node name
+Mainly for your own sanity
+"usedForSteeringWheel"
+bool
+Whether this node should act as a "steering wheel", rotating toward your steering direction
+Only relevant when using the wheeledController
+
+Position
+"localPosition"
+Vector2
+Position, relative to parent node.
+"localRotation"
+float
+Rotation relative to parent node.
+"localScale"
+Vector2
+Scale relative to parent node.
+
+Visuals
+"sortingGroup"
+int
+SortingGroup order. Higher gets rendered above lower.
+Optional. Should generally only be defined for the root node.
+"sprites"
+array of sprite
+Visuals attached to this sprite (see sprite below).
+Optional
+"trailRenderers"
+array of trailRenderer
+Visual effect
+Optional
+"particleEmitters"
+array of particleEmitter
+Visual effect
+Optional
+
+Turret
+"turret"
+object
+Turret handler, will rotate the node towards your aimpoint.
+Optional
+
+Mounts
+"weaponMount"
+object
+Where a weapon is spawned for a given "weaponSlots" index.
+Optional. Index count starts at 0.
+"moduleMount"
+object
+Used for spawning equipped module objects. Similar to the weaponMount.
+Optional. Index count starts at 0.
+Only relevant for modules of the "Mounted" type, as other modules don't require a spawned object.
+
+Collision
+"hasCollider"
+bool
+Set to true if a collider should be added to this node. Must also contain a sprite with usedForCollider set to true.
+Optional
+"collisionDamage"
+object
+Collision damage settings
+Optional. Should also have hasCollider set to true.
+"destroyer"
+object
+Handles destruction of wall on collision.
+Optional. Should also have collisionDamage set to function properly.
+
+Child Nodes
+"childrenNodes"
+array
+An array of child nodes (recursive).
+Optional

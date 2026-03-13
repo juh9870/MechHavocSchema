@@ -1,0 +1,30 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"engineForce": {
+			"type": "number",
+			"title": "Same as mechController"
+		},
+		"turnForce": {
+			"type": "number",
+			"title": "Rotational force when trying to turn."
+		},
+		"engineAudioVolume": {
+			"type": "number",
+			"title": "Audio volume of the vehicle's engine sound",
+			"description": "Advised to keep this between 0 and 1"
+		},
+		"tracksAudioVolume": {
+			"type": "number",
+			"title": "Audio volume of the vehicles tracks sound, heard while moving",
+			"description": "Advised to keep this between 0 and 1"
+		}
+	},
+	"required": [
+		"engineForce",
+		"turnForce",
+		"engineAudioVolume",
+		"tracksAudioVolume"
+	]
+}

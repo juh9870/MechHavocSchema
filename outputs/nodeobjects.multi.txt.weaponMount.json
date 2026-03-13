@@ -1,0 +1,29 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"enabled": {
+			"type": "boolean"
+		},
+		"slotId": {
+			"type": "integer",
+			"title": "Should be the index of a weapon slot defined \"weaponSlots\".",
+			"description": "Index count starts at 0."
+		},
+		"flipWeapon": {
+			"type": "boolean",
+			"title": "Mirrors the weapon",
+			"description": "As a general rule, weaponMounts on the right side of the vehicle should have this set to true"
+		},
+		"sortingOrder": {
+			"type": "integer",
+			"title": "Similar to sprite sorting order."
+		}
+	},
+	"required": [
+		"enabled",
+		"slotId",
+		"flipWeapon",
+		"sortingOrder"
+	]
+}

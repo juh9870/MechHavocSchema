@@ -1,0 +1,58 @@
+ mechController
+"engineForce"
+float
+Main movement force. Higher = faster acceleration and higher max speed.
+"strafeModifier"
+float
+Strafe speed vs forward speed. 1 = same, <1= slower.
+"limbMoveDistance"
+float
+How far from the resting position limbs will try to step while moving.
+"velocityModifier"
+float
+Modifier to limbMoveDistance, based on mech velocity.
+This value is commonly somewhere around 0.6
+
+trackedController
+"engineForce"
+float
+Same as mechController
+"turnForce"
+float
+Rotational force when trying to turn.
+"engineAudioVolume"
+float
+Audio volume of the vehicle's engine sound
+Advised to keep this between 0 and 1
+"tracksAudioVolume"
+float
+Audio volume of the vehicles tracks sound, heard while moving
+Advised to keep this between 0 and 1
+
+wheeledController
+"engineForce"
+float
+Same as mechController
+"turnForce"
+float
+same as trackedController
+"driftFactor"
+float
+Modifier of vehicle velocity to the left or right. Setting it at 0 will result in a vehicle that only moves in its steering direction. While a value of 1 will result in a slidey car
+0.99 is a good default value. Should stick between 0 and 1, unless you want some interesting bugs.
+"engineAudioVolume"
+float
+Audio volume of the vehicle's engine sound
+Advised to keep this between 0 and 1
+
+hoverController
+"engineForce"
+float
+Same as mechController
+"strafeModifier"
+float
+Same as mechController
+"hoverAudioVolume"
+float
+Audio volume of the vehicle's hover sound effect
+Advised to keep this between 0 and 1

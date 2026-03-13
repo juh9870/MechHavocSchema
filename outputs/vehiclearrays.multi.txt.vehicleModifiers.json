@@ -1,0 +1,19 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"type": {
+			"type": "integer",
+			"title": "Defines which modifier",
+			"description": "0 = None,\n1 = RearmSpeed (0.25 = +25%),\n2 = RewardMultiplier (1.25 = +25%),\n3 = IntegratedAPS (deprecated),\n4 = IntegratedTurret (deprecated),\n5 = AblativeArmor (has no function),\n6 = DozerBladers (has no function),\n7 = ReloadSpeed (0.25 = +25%),\n8 = RadarRange (25 = +25m)"
+		},
+		"value": {
+			"type": "number",
+			"title": "value of the modifier"
+		}
+	},
+	"required": [
+		"type",
+		"value"
+	]
+}

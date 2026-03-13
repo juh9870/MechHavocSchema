@@ -1,0 +1,27 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"enabled": {
+			"type": "boolean"
+		},
+		"angleLimitLeft": {
+			"type": "integer",
+			"title": "Left rotation limit"
+		},
+		"angleLimitRight": {
+			"type": "integer",
+			"title": "right rotation limit"
+		},
+		"rotationSpeed": {
+			"type": "integer",
+			"title": "Rotation speed of the turret"
+		}
+	},
+	"required": [
+		"enabled",
+		"angleLimitLeft",
+		"angleLimitRight",
+		"rotationSpeed"
+	]
+}

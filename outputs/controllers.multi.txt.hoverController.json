@@ -1,0 +1,24 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"engineForce": {
+			"type": "number",
+			"title": "Same as mechController"
+		},
+		"strafeModifier": {
+			"type": "number",
+			"title": "Same as mechController"
+		},
+		"hoverAudioVolume": {
+			"type": "number",
+			"title": "Audio volume of the vehicle's hover sound effect",
+			"description": "Advised to keep this between 0 and 1"
+		}
+	},
+	"required": [
+		"engineForce",
+		"strafeModifier",
+		"hoverAudioVolume"
+	]
+}

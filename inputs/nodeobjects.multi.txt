@@ -1,0 +1,170 @@
+ sprite
+"name"
+string
+Sprite name
+Mainly for your own sanity
+"usedForCollider"
+bool
+Whether a collider should use this sprite's shape as a reference.
+"usedForSteeringWheel"
+bool
+Whether this sprite should act as a "steering wheel", rotating toward your steering direction
+Only relevant when using the wheeledController
+"localPosition"
+Vector2
+Position, relative to parent node.
+"localRotation"
+float
+Rotation relative to parent node.
+"localScale"
+Vector2
+Scale relative to parent node.
+"spritePath"
+string
+PNG file name in the mod's folder.
+"color"
+Color
+Change the sprite color.
+Optional.
+Most commonly used for "energySprites", such as a bright cockpit. That are by default white and have their material set to 1. Color is then used to tweak the energy color.
+"sortingOrder"
+int
+The sprite sorting order. Higher gets rendered above lower.
+"material"
+int
+sprite material
+0 = default,
+1 = glow material,
+
+trailRenderer
+"name"
+string
+Trail name
+Mainly for your own sanity
+"localPosition"
+Vector2
+Position, relative to parent node.
+"time"
+float
+How long the trail takes to fade out
+"widthStart"
+float
+Width of the trail at its start point
+"widthEnd"
+float
+Width of the trail at its end point
+"colorStart"
+Color
+Trail color at its start point
+"colorEnd"
+Color
+Trail color at its end point
+"sortingOrder"
+int
+The sorting order. Higher gets rendered above lower.
+
+particleEmitter
+"name"
+string
+Trail name
+Mainly for your own sanity
+"localPosition"
+Vector2
+Position, relative to parent node.
+"lifeTime"
+float
+How long the particles take to fade out
+"sizeStart"
+float
+Size of particles
+"speedStart"
+float
+Speed of particles
+"colorStart"
+Color
+Color of particles
+"emissionRateOverDistance"
+float
+How many particles are emitted per world unit
+Often used for things like dust tails behind vehicles
+"emisionRateOverTime"
+float
+How many particles are emitted per second
+"emissionShape"
+int
+The shape the particles are emitted from
+0 = circle,
+1 = square
+"emissionShapeSize"
+Vector2
+The size of the shape particles are emitted from
+"sortingOrder"
+int
+The sorting order. Higher gets rendered above lower.
+
+turret
+"enabled"
+bool
+"angleLimitLeft"
+int
+Left rotation limit
+"angleLimitRight"
+int
+right rotation limit
+"rotationSpeed"
+int
+Rotation speed of the turret
+
+weaponMount
+"enabled"
+bool
+"slotId"
+int
+Should be the index of a weapon slot defined "weaponSlots".
+Index count starts at 0.
+"flipWeapon"
+bool
+Mirrors the weapon
+As a general rule, weaponMounts on the right side of the vehicle should have this set to true
+"sortingOrder"
+int
+Similar to sprite sorting order.
+
+moduleMount
+"enabled"
+bool
+"mountId"
+int
+The index of the moduleGroup defined in "vehicleModules"
+"slotId"
+int
+The index of the module slot
+Can be left at 0 in most cases, unless the relevant module group has more than 1 slot
+"sortingOrder"
+int
+Similar to sprite sorting order.
+
+collisionDamage
+"enabled"
+bool
+"collisionDamage"
+bool
+If true, collisions can deal damage
+"collisionDestruction"
+bool
+If true, collision can destroy walls
+Also requires a "destroyer"
+"damageModifier"
+float
+Multiplier on collision damage
+
+destroyer
+"enabled"
+bool
+"radius"
+float
+Destruction radius
+"force"
+float
+Destruction strength
+If destruction will happen, and the exact radius size is based, in part, on the destroyer's force, and the destructible's resistance.

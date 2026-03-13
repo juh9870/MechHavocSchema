@@ -1,0 +1,66 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"name": {
+			"type": "string",
+			"title": "Trail name",
+			"description": "Mainly for your own sanity"
+		},
+		"localPosition": {
+			"type": "Vector2",
+			"title": "Position, relative to parent node."
+		},
+		"lifeTime": {
+			"type": "number",
+			"title": "How long the particles take to fade out"
+		},
+		"sizeStart": {
+			"type": "number",
+			"title": "Size of particles"
+		},
+		"speedStart": {
+			"type": "number",
+			"title": "Speed of particles"
+		},
+		"colorStart": {
+			"type": "Color",
+			"title": "Color of particles"
+		},
+		"emissionRateOverDistance": {
+			"type": "number",
+			"title": "How many particles are emitted per world unit",
+			"description": "Often used for things like dust tails behind vehicles"
+		},
+		"emisionRateOverTime": {
+			"type": "number",
+			"title": "How many particles are emitted per second"
+		},
+		"emissionShape": {
+			"type": "integer",
+			"title": "The shape the particles are emitted from",
+			"description": "0 = circle,\n1 = square"
+		},
+		"emissionShapeSize": {
+			"type": "Vector2",
+			"title": "The size of the shape particles are emitted from"
+		},
+		"sortingOrder": {
+			"type": "integer",
+			"title": "The sorting order. Higher gets rendered above lower."
+		}
+	},
+	"required": [
+		"name",
+		"localPosition",
+		"lifeTime",
+		"sizeStart",
+		"speedStart",
+		"colorStart",
+		"emissionRateOverDistance",
+		"emisionRateOverTime",
+		"emissionShape",
+		"emissionShapeSize",
+		"sortingOrder"
+	]
+}

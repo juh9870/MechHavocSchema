@@ -1,0 +1,73 @@
+ vehicleModifiers
+"type"
+int
+Defines which modifier
+0 = None,
+1 = RearmSpeed (0.25 = +25%),
+2 = RewardMultiplier (1.25 = +25%),
+3 = IntegratedAPS (deprecated),
+4 = IntegratedTurret (deprecated),
+5 = AblativeArmor (has no function),
+6 = DozerBladers (has no function),
+7 = ReloadSpeed (0.25 = +25%),
+8 = RadarRange (25 = +25m)
+"value"
+float
+value of the modifier
+
+vehicleModules
+"type"
+int
+Determines the module group type
+0 = Body,
+1 = Chassis,
+2 = Armor,
+3 = Systems,
+4 = WeaponSystems,
+5 = Mount
+"slots"
+int
+The amount of modules that can be equipped to this module group
+"previewPosition"
+Vector2
+UI preview position in the loadout screen
+
+weaponSlots
+"allowedTypes"
+int[]
+Allowed weapon types
+0 = Ballistic,
+1 = Rocket,
+2 = Experimental
+"allowedSize"
+int[]
+Allowed weapon sizes
+0 = Portable,
+1 = Small,
+2 = Medium,
+3 = Large,
+4 = Titan
+"modifiers"
+array
+"previewPosition"
+Vector2
+UI preview position in the loadout screen
+
+limbs
+Relevant for mechController
+"limbGroup"
+int
+Group index for alternating step patterns.
+Should either be 0 or 1
+"moveDuration"
+float
+Time for a step to complete
+How far limbs can move from its resting position
+"maxDistance"
+float
+How far a limb can be from its target position. If distance > maxDistance: try to move limb to target position.
+"sprite"
+sprite object
+"localPosition"
+vector2
+Starting and resting position of the limb.

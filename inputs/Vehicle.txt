@@ -1,0 +1,101 @@
+Vehicle
+Key
+Type
+Summary
+Notes
+"version"
+int
+"id"
+string
+Unlock ID, try to make it unique
+"parentUnlockId"
+string
+Setting this to another item's unlock ID, will require unlocking the other item first before making this mod available
+You can reference an other workshop item's id for this. However it must then also include the prefix "modNode:".
+As an example, to set the Badger-ex as the parent unlock, you must add: "parentUnlockId": "modNode:Badger-ex"
+"name"
+string
+In-game display name
+"description"
+string
+In-game item description
+"shortDescription"
+string
+Short blurb used in compact UI
+
+Health
+"maxHp"
+int
+Default max vehicle health
+"armor"
+int
+Default vehicle armor.
+Not yet implemented
+
+Physics
+"weight"
+float
+Vehicle mass, higher = heavier.
+"linearDamping"
+float
+Movement drag, higher = sluggish and harder to push around
+"angularDamping"
+float
+Turn drag, higher = rotation less impact from physics forces, such as recoil.
+
+Unlock Costs
+"salvageCost"
+int
+Unlock cost (Salvage).
+"plasteelCost"
+int
+Unlock cost (Plasteel).
+"redMercuryCost"
+int
+Unlock cost (Red Mercury).
+"computroniumCost"
+int
+Unlock cost (Computronium).
+
+Previews
+"previewOutline"
+string
+PNG file name for preview image.
+"preview32"
+string
+PNG file name for small preview (32x32 pixels).
+
+Vehicle Controllers
+"mechController"
+object
+Movement controller for mechs
+Only 1 vehicle controller should be added. This will also define the vehicle type
+"trackedController"
+object
+Movement controller for tracked vehicles
+"wheeledController"
+object
+Movement controller for wheeled vehicles
+"hoverController"
+object
+Movement controller for hover vehicles
+
+Other
+"vehicleModifiers"
+array
+Vehicle modifiers
+"vehicleModules"
+array
+Defines the vehicle's module slots.
+"weaponSlots"
+array
+List of weapon slots.
+A weaponMount with matching slotId must also be added to allow the weapon to spawn.
+"limbs"
+array
+Feet/legs settings for mechs
+Should only be added when also making use of the mechController
+"node"
+object
+Vehicle object root. In the case of mechs, this would usually be the lower body.
+Other vehicles generally don't have a split between upper/lower body, so this would just be the main body of the vehicle.

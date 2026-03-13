@@ -1,0 +1,49 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"name": {
+			"type": "string",
+			"title": "Trail name",
+			"description": "Mainly for your own sanity"
+		},
+		"localPosition": {
+			"type": "Vector2",
+			"title": "Position, relative to parent node."
+		},
+		"time": {
+			"type": "number",
+			"title": "How long the trail takes to fade out"
+		},
+		"widthStart": {
+			"type": "number",
+			"title": "Width of the trail at its start point"
+		},
+		"widthEnd": {
+			"type": "number",
+			"title": "Width of the trail at its end point"
+		},
+		"colorStart": {
+			"type": "Color",
+			"title": "Trail color at its start point"
+		},
+		"colorEnd": {
+			"type": "Color",
+			"title": "Trail color at its end point"
+		},
+		"sortingOrder": {
+			"type": "integer",
+			"title": "The sorting order. Higher gets rendered above lower."
+		}
+	},
+	"required": [
+		"name",
+		"localPosition",
+		"time",
+		"widthStart",
+		"widthEnd",
+		"colorStart",
+		"colorEnd",
+		"sortingOrder"
+	]
+}

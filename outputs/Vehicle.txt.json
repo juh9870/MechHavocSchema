@@ -1,0 +1,143 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"version": {
+			"type": "integer"
+		},
+		"id": {
+			"type": "string",
+			"title": "Unlock ID, try to make it unique"
+		},
+		"parentUnlockId": {
+			"type": "string",
+			"title": "Setting this to another item's unlock ID, will require unlocking the other item first before making this mod available",
+			"description": "You can reference an other workshop item's id for this. However it must then also include the prefix \"modNode:\".\nAs an example, to set the Badger-ex as the parent unlock, you must add: \"parentUnlockId\": \"modNode:Badger-ex\""
+		},
+		"name": {
+			"type": "string",
+			"title": "In-game display name"
+		},
+		"description": {
+			"type": "string",
+			"title": "In-game item description"
+		},
+		"shortDescription": {
+			"type": "string",
+			"title": "Short blurb used in compact UI"
+		},
+		"maxHp": {
+			"type": "integer",
+			"title": "Default max vehicle health"
+		},
+		"armor": {
+			"type": "integer",
+			"title": "Default vehicle armor.",
+			"description": "Not yet implemented"
+		},
+		"weight": {
+			"type": "number",
+			"title": "Vehicle mass, higher = heavier."
+		},
+		"linearDamping": {
+			"type": "number",
+			"title": "Movement drag, higher = sluggish and harder to push around"
+		},
+		"angularDamping": {
+			"type": "number",
+			"title": "Turn drag, higher = rotation less impact from physics forces, such as recoil."
+		},
+		"salvageCost": {
+			"type": "integer",
+			"title": "Unlock cost (Salvage)."
+		},
+		"plasteelCost": {
+			"type": "integer",
+			"title": "Unlock cost (Plasteel)."
+		},
+		"redMercuryCost": {
+			"type": "integer",
+			"title": "Unlock cost (Red Mercury)."
+		},
+		"computroniumCost": {
+			"type": "integer",
+			"title": "Unlock cost (Computronium)."
+		},
+		"previewOutline": {
+			"type": "string",
+			"title": "PNG file name for preview image."
+		},
+		"preview32": {
+			"type": "string",
+			"title": "PNG file name for small preview (32x32 pixels)."
+		},
+		"mechController": {
+			"type": "object",
+			"title": "Movement controller for mechs",
+			"description": "Only 1 vehicle controller should be added. This will also define the vehicle type"
+		},
+		"trackedController": {
+			"type": "object",
+			"title": "Movement controller for tracked vehicles"
+		},
+		"wheeledController": {
+			"type": "object",
+			"title": "Movement controller for wheeled vehicles"
+		},
+		"hoverController": {
+			"type": "object",
+			"title": "Movement controller for hover vehicles"
+		},
+		"vehicleModifiers": {
+			"type": "array",
+			"title": "Vehicle modifiers"
+		},
+		"vehicleModules": {
+			"type": "array",
+			"title": "Defines the vehicle's module slots."
+		},
+		"weaponSlots": {
+			"type": "array",
+			"title": "List of weapon slots.",
+			"description": "A weaponMount with matching slotId must also be added to allow the weapon to spawn."
+		},
+		"limbs": {
+			"type": "array",
+			"title": "Feet/legs settings for mechs",
+			"description": "Should only be added when also making use of the mechController"
+		},
+		"node": {
+			"type": "object",
+			"title": "Vehicle object root. In the case of mechs, this would usually be the lower body.",
+			"description": "Other vehicles generally don't have a split between upper/lower body, so this would just be the main body of the vehicle."
+		}
+	},
+	"required": [
+		"version",
+		"id",
+		"parentUnlockId",
+		"name",
+		"description",
+		"shortDescription",
+		"maxHp",
+		"armor",
+		"weight",
+		"linearDamping",
+		"angularDamping",
+		"salvageCost",
+		"plasteelCost",
+		"redMercuryCost",
+		"computroniumCost",
+		"previewOutline",
+		"preview32",
+		"mechController",
+		"trackedController",
+		"wheeledController",
+		"hoverController",
+		"vehicleModifiers",
+		"vehicleModules",
+		"weaponSlots",
+		"limbs",
+		"node"
+	]
+}

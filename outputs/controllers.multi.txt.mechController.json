@@ -1,0 +1,29 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"engineForce": {
+			"type": "number",
+			"title": "Main movement force. Higher = faster acceleration and higher max speed."
+		},
+		"strafeModifier": {
+			"type": "number",
+			"title": "Strafe speed vs forward speed. 1 = same, <1= slower."
+		},
+		"limbMoveDistance": {
+			"type": "number",
+			"title": "How far from the resting position limbs will try to step while moving."
+		},
+		"velocityModifier": {
+			"type": "number",
+			"title": "Modifier to limbMoveDistance, based on mech velocity.",
+			"description": "This value is commonly somewhere around 0.6"
+		}
+	},
+	"required": [
+		"engineForce",
+		"strafeModifier",
+		"limbMoveDistance",
+		"velocityModifier"
+	]
+}
