@@ -1,951 +1,956 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "mech_havoc/vehicle",
-    "type": "object",
-    "properties": {
-        "vehicle": {
-            "$ref": "#/$defs/Vehicle"
-        }
-    },
-    "required": [
-        "vehicle"
-    ],
-    "$defs": {
-        "Vehicle": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "version": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "string",
-                    "title": "Unlock ID, try to make it unique"
-                },
-                "parentUnlockId": {
-                    "type": "string",
-                    "title": "Setting this to another item's unlock ID, will require unlocking the other item first before making this mod available",
-                    "description": "You can reference an other workshop item's id for this. However it must then also include the prefix \"modNode:\".\nAs an example, to set the Badger-ex as the parent unlock, you must add: \"parentUnlockId\": \"modNode:Badger-ex\""
-                },
-                "name": {
-                    "type": "string",
-                    "title": "In-game display name"
-                },
-                "description": {
-                    "type": "string",
-                    "title": "In-game item description"
-                },
-                "shortDescription": {
-                    "type": "string",
-                    "title": "Short blurb used in compact UI"
-                },
-                "maxHp": {
-                    "type": "integer",
-                    "title": "Default max vehicle health"
-                },
-                "armor": {
-                    "type": "integer",
-                    "title": "Default vehicle armor",
-                    "description": "Not yet implemented"
-                },
-                "weight": {
-                    "type": "number",
-                    "title": "Vehicle mass, higher = heavier"
-                },
-                "linearDamping": {
-                    "type": "number",
-                    "title": "Movement drag, higher = sluggish and harder to push around"
-                },
-                "angularDamping": {
-                    "type": "number",
-                    "title": "Turn drag, higher = rotation less impact from physics forces, such as recoil"
-                },
-                "salvageCost": {
-                    "type": "integer",
-                    "title": "Unlock cost (Salvage)"
-                },
-                "plasteelCost": {
-                    "type": "integer",
-                    "title": "Unlock cost (Plasteel)"
-                },
-                "redMercuryCost": {
-                    "type": "integer",
-                    "title": "Unlock cost (Red Mercury)"
-                },
-                "computroniumCost": {
-                    "type": "integer",
-                    "title": "Unlock cost (Computronium)"
-                },
-                "previewOutline": {
-                    "type": "string",
-                    "title": "PNG file name for preview image"
-                },
-                "preview32": {
-                    "type": "string",
-                    "title": "PNG file name for small preview (32x32 pixels)"
-                },
-                "mechController": {
-                    "$ref": "#/$defs/MechController",
-                    "title": "Movement controller for mechs",
-                    "description": "Only 1 vehicle controller should be added. This will also define the vehicle type"
-                },
-                "trackedController": {
-                    "$ref": "#/$defs/TrackedController",
-                    "title": "Movement controller for tracked vehicles"
-                },
-                "wheeledController": {
-                    "$ref": "#/$defs/WheeledController",
-                    "title": "Movement controller for wheeled vehicles"
-                },
-                "hoverController": {
-                    "$ref": "#/$defs/HoverController",
-                    "title": "Movement controller for hover vehicles"
-                },
-                "vehicleModifiers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/VehicleModifier"
-                    },
-                    "title": "Vehicle modifiers"
-                },
-                "vehicleModules": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/VehicleModule"
-                    },
-                    "title": "Defines the vehicle's module slots"
-                },
-                "weaponSlots": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/WeaponSlot"
-                    },
-                    "title": "List of weapon slots",
-                    "description": "A weaponMount with matching slotId must also be added to allow the weapon to spawn"
-                },
-                "limbs": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/Limb"
-                    },
-                    "title": "Feet/legs settings for mechs",
-                    "description": "Should only be added when also making use of the mechController"
-                },
-                "node": {
-                    "$ref": "#/$defs/VehicleNode",
-                    "title": "Vehicle object root. In the case of mechs, this would usually be the lower body",
-                    "description": "Other vehicles generally don't have a split between upper/lower body, so this would just be the main body of the vehicle"
-                }
-            },
-            "required": [
-                "version",
-                "id",
-                "name",
-                "description",
-                "shortDescription",
-                "maxHp",
-                "armor",
-                "weight",
-                "linearDamping",
-                "angularDamping",
-                "previewOutline",
-                "preview32",
-                "vehicleModifiers",
-                "vehicleModules",
-                "weaponSlots",
-                "limbs",
-                "node"
-            ],
-            "oneOf": [
-                {
-                    "required": [
-                        "mechController"
-                    ]
-                },
-                {
-                    "required": [
-                        "trackedController"
-                    ]
-                },
-                {
-                    "required": [
-                        "wheeledController"
-                    ]
-                },
-                {
-                    "required": [
-                        "hoverController"
-                    ]
-                }
-            ]
-        },
-        "MechController": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "engineForce": {
-                    "type": "number",
-                    "title": "Main movement force. Higher = faster acceleration and higher max speed"
-                },
-                "strafeModifier": {
-                    "type": "number",
-                    "title": "Strafe speed vs forward speed. 1 = same, <1= slower"
-                },
-                "limbMoveDistance": {
-                    "type": "number",
-                    "title": "How far from the resting position limbs will try to step while moving"
-                },
-                "velocityModifier": {
-                    "type": "number",
-                    "title": "Modifier to limbMoveDistance, based on mech velocity",
-                    "description": "This value is commonly somewhere around 0.6"
-                }
-            },
-            "required": [
-                "engineForce",
-                "strafeModifier",
-                "limbMoveDistance",
-                "velocityModifier"
-            ]
-        },
-        "TrackedController": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "engineForce": {
-                    "type": "number",
-                    "title": "Main movement force. Higher = faster acceleration and higher max speed"
-                },
-                "turnForce": {
-                    "type": "number",
-                    "title": "Rotational force when trying to turn"
-                },
-                "engineAudioVolume": {
-                    "type": "number",
-                    "title": "Audio volume of the vehicle's engine sound",
-                    "description": "Advised to keep this between 0 and 1"
-                },
-                "tracksAudioVolume": {
-                    "type": "number",
-                    "title": "Audio volume of the vehicles tracks sound, heard while moving",
-                    "description": "Advised to keep this between 0 and 1"
-                }
-            },
-            "required": [
-                "engineForce",
-                "turnForce",
-                "engineAudioVolume",
-                "tracksAudioVolume"
-            ]
-        },
-        "WheeledController": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "engineForce": {
-                    "type": "number",
-                    "title": "Main movement force. Higher = faster acceleration and higher max speed"
-                },
-                "turnForce": {
-                    "type": "number",
-                    "title": "Rotational force when trying to turn"
-                },
-                "driftFactor": {
-                    "type": "number",
-                    "title": "Modifier of vehicle velocity to the left or right. Setting it at 0 will result in a vehicle that only moves in its steering direction. While a value of 1 will result in a slidey car",
-                    "description": "0.99 is a good default value. Should stick between 0 and 1, unless you want some interesting bugs"
-                },
-                "engineAudioVolume": {
-                    "type": "number",
-                    "title": "Audio volume of the vehicle's engine sound",
-                    "description": "Advised to keep this between 0 and 1"
-                }
-            },
-            "required": [
-                "engineForce",
-                "turnForce",
-                "driftFactor",
-                "engineAudioVolume"
-            ]
-        },
-        "HoverController": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "engineForce": {
-                    "type": "number",
-                    "title": "Main movement force. Higher = faster acceleration and higher max speed"
-                },
-                "strafeModifier": {
-                    "type": "number",
-                    "title": "Strafe speed vs forward speed. 1 = same, <1= slower"
-                },
-                "engineAudioVolume": {
-                    "type": "number",
-                    "title": "Audio volume of the vehicle's hover sound effect",
-                    "description": "Advised to keep this between 0 and 1"
-                }
-            },
-            "required": [
-                "engineForce",
-                "strafeModifier",
-                "engineAudioVolume"
-            ]
-        },
-        "VehicleModifier": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "title": "Defines which modifier",
-                    "type": "integer",
-                    "enum": [
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8
-                    ],
-                    "x-enumTitles": [
-                        "None",
-                        "RearmSpeed (0.25 = +25%)",
-                        "RewardMultiplier (1.25 = +25%)",
-                        "IntegratedAPS (deprecated)",
-                        "IntegratedTurret (deprecated)",
-                        "AblativeArmor (has no function)",
-                        "DozerBladers (has no function)",
-                        "ReloadSpeed (0.25 = +25%)",
-                        "RadarRange (25 = +25m)"
-                    ]
-                },
-                "value": {
-                    "type": "number",
-                    "title": "value of the modifier"
-                }
-            },
-            "required": [
-                "type",
-                "value"
-            ]
-        },
-        "WeaponModifier": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "title": "Defines which modifier",
-                    "type": "integer",
-                    "enum": [
-                        0,
-                        1,
-                        2
-                    ],
-                    "x-enumTitles": [
-                        "None",
-                        "RearmSpeed (0.25 = +25%)",
-                        "Recoil (0.25 = +25%)"
-                    ]
-                },
-                "value": {
-                    "type": "number",
-                    "title": "value of the modifier"
-                }
-            },
-            "required": [
-                "type",
-                "value"
-            ]
-        },
-        "VehicleModule": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "title": "Determines the module group type",
-                    "type": "integer",
-                    "enum": [
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5
-                    ],
-                    "x-enumTitles": [
-                        "Body",
-                        "Chassis",
-                        "Armor",
-                        "Systems",
-                        "WeaponSystems",
-                        "Mount"
-                    ]
-                },
-                "slots": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "title": "The amount of modules that can be equipped to this module group"
-                },
-                "previewPosition": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "UI preview position in the loadout screen"
-                }
-            },
-            "required": [
-                "type",
-                "slots"
-            ]
-        },
-        "WeaponSlot": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "allowedTypes": {
-                    "type": "array",
-                    "title": "Allowed weapon types",
-                    "items": {
-                        "type": "integer",
-                        "enum": [
-                            0,
-                            1,
-                            2
-                        ],
-                        "x-enumTitles": [
-                            "Ballistic",
-                            "Rocket",
-                            "Experimental"
-                        ]
-                    }
-                },
-                "allowedSizes": {
-                    "type": "array",
-                    "title": "Allowed weapon sizes",
-                    "items": {
-                        "type": "integer",
-                        "enum": [
-                            0,
-                            1,
-                            2,
-                            3,
-                            4
-                        ],
-                        "x-enumTitles": [
-                            "Portable",
-                            "Small",
-                            "Medium",
-                            "Large",
-                            "Titan"
-                        ]
-                    }
-                },
-                "modifiers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/WeaponModifier"
-                    }
-                },
-                "previewPosition": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "UI preview position in the loadout screen"
-                }
-            },
-            "required": [
-                "allowedTypes",
-                "allowedSizes",
-                "previewPosition"
-            ]
-        },
-        "Limb": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "limbGroup": {
-                    "type": "integer",
-                    "title": "Group index for alternating step patterns",
-                    "description": "Should either be 0 or 1",
-                    "enum": [
-                        0,
-                        1
-                    ]
-                },
-                "moveDuration": {
-                    "type": "number",
-                    "title": "Time for a step to complete"
-                },
-                "maxDistance": {
-                    "type": "number",
-                    "title": "How far a limb can be from its target position",
-                    "description": "If distance > maxDistance: try to move limb to target position"
-                },
-                "sprite": {
-                    "$ref": "#/$defs/Sprite"
-                },
-                "localPosition": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "Starting and resting position of the limb"
-                }
-            },
-            "required": [
-                "limbGroup",
-                "moveDuration",
-                "maxDistance",
-                "sprite",
-                "localPosition"
-            ]
-        },
-        "VehicleNode": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "title": "Node name",
-                    "description": "Mainly for your own sanity"
-                },
-                "usedForSteeringWheel": {
-                    "type": "boolean",
-                    "title": "Whether this node should act as a \"steering wheel\", rotating toward your steering direction",
-                    "description": "Only relevant when using the wheeledController"
-                },
-                "localPosition": {
-                    "title": "Position, relative to parent node"
-                },
-                "localRotation": {
-                    "type": "number",
-                    "title": "Rotation relative to parent node"
-                },
-                "localScale": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "Scale relative to parent node"
-                },
-                "sortingGroup": {
-                    "type": "integer",
-                    "title": "SortingGroup order. Higher gets rendered above lower",
-                    "description": "Optional. Should generally only be defined for the root node"
-                },
-                "sprites": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/Sprite"
-                    },
-                    "title": "Visuals attached to this sprite (see sprite below)",
-                    "description": "Optional"
-                },
-                "trailRenderers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/TrailRenderer"
-                    },
-                    "title": "Visual effect",
-                    "description": "Optional"
-                },
-                "particleEmitters": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/ParticleEmitter"
-                    },
-                    "title": "Visual effect",
-                    "description": "Optional"
-                },
-                "turret": {
-                    "$ref": "#/$defs/Turret",
-                    "title": "Turret handler, will rotate the node towards your aimpoint",
-                    "description": "Optional"
-                },
-                "weaponMount": {
-                    "$ref": "#/$defs/WeaponMount",
-                    "title": "Where a weapon is spawned for a given \"weaponSlots\" index",
-                    "description": "Optional. Index count starts at 0"
-                },
-                "moduleMount": {
-                    "$ref": "#/$defs/ModuleMount",
-                    "title": "Used for spawning equipped module objects. Similar to the weaponMount",
-                    "description": "Optional. Index count starts at 0.\nOnly relevant for modules of the \"Mounted\" type, as other modules don't require a spawned object"
-                },
-                "hasCollider": {
-                    "type": "boolean",
-                    "title": "Set to true if a collider should be added to this node. Must also contain a sprite with usedForCollider set to true",
-                    "description": "Optional"
-                },
-                "collisionDamage": {
-                    "$ref": "#/$defs/CollisionDamage",
-                    "title": "Collision damage settings",
-                    "description": "Optional. Should also have hasCollider set to true"
-                },
-                "destroyer": {
-                    "$ref": "#/$defs/Destroyer",
-                    "title": "Handles destruction of wall on collision",
-                    "description": "Optional. Should also have collisionDamage set to function properly"
-                },
-                "childrenNodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/VehicleNode"
-                    },
-                    "title": "An array of child nodes (recursive)",
-                    "description": "Optional"
-                }
-            },
-            "required": [
-                "name",
-                "localPosition"
-            ]
-        },
-        "Sprite": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "title": "Sprite name",
-                    "description": "Mainly for your own sanity"
-                },
-                "usedForCollider": {
-                    "type": "boolean",
-                    "title": "Whether a collider should use this sprite's shape as a reference."
-                },
-                "usedForSteeringWheel": {
-                    "type": "boolean",
-                    "title": "Whether this sprite should act as a \"steering wheel\", rotating toward your steering direction",
-                    "description": "Only relevant when using the wheeledController"
-                },
-                "localPosition": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "Position, relative to parent node."
-                },
-                "localRotation": {
-                    "type": "number",
-                    "title": "Rotation relative to parent node."
-                },
-                "localScale": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "Scale relative to parent node."
-                },
-                "spritePath": {
-                    "type": "string",
-                    "title": "PNG file name in the mod's folder."
-                },
-                "color": {
-                    "$ref": "#/$defs/Color",
-                    "title": "Change the sprite color.",
-                    "description": "Optional.\nMost commonly used for \"energySprites\", such as a bright cockpit. That are by default white and have their material set to 1. Color is then used to tweak the energy color."
-                },
-                "sortingOrder": {
-                    "type": "integer",
-                    "title": "The sprite sorting order. Higher gets rendered above lower."
-                },
-                "material": {
-                    "type": "integer",
-                    "title": "sprite material",
-                    "description": "0 = default,\n1 = glow material",
-                    "enum": [
-                        0,
-                        1
-                    ]
-                }
-            },
-            "required": [
-                "spritePath"
-            ]
-        },
-        "TrailRenderer": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "title": "Trail name",
-                    "description": "Mainly for your own sanity"
-                },
-                "localPosition": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "Position, relative to parent node."
-                },
-                "time": {
-                    "type": "number",
-                    "title": "How long the trail takes to fade out"
-                },
-                "widthStart": {
-                    "type": "number",
-                    "title": "Width of the trail at its start point"
-                },
-                "widthEnd": {
-                    "type": "number",
-                    "title": "Width of the trail at its end point"
-                },
-                "colorStart": {
-                    "$ref": "#/$defs/Color",
-                    "title": "Trail color at its start point"
-                },
-                "colorEnd": {
-                    "$ref": "#/$defs/Color",
-                    "title": "Trail color at its end point"
-                },
-                "sortingOrder": {
-                    "type": "integer",
-                    "title": "The sorting order. Higher gets rendered above lower."
-                }
-            },
-            "required": [
-                "name",
-                "localPosition",
-                "time",
-                "widthStart",
-                "widthEnd",
-                "colorStart",
-                "colorEnd",
-                "sortingOrder"
-            ]
-        },
-        "ParticleEmitter": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "title": "Trail name",
-                    "description": "Mainly for your own sanity"
-                },
-                "localPosition": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "Position, relative to parent node."
-                },
-                "lifeTime": {
-                    "type": "number",
-                    "title": "How long the particles take to fade out"
-                },
-                "sizeStart": {
-                    "type": "number",
-                    "title": "Size of particles"
-                },
-                "speedStart": {
-                    "type": "number",
-                    "title": "Speed of particles"
-                },
-                "colorStart": {
-                    "$ref": "#/$defs/Color",
-                    "title": "Color of particles"
-                },
-                "emissionRateOverDistance": {
-                    "type": "number",
-                    "title": "How many particles are emitted per world unit",
-                    "description": "Often used for things like dust tails behind vehicles"
-                },
-                "emisionRateOverTime": {
-                    "type": "number",
-                    "title": "How many particles are emitted per second"
-                },
-                "emissionShape": {
-                    "type": "integer",
-                    "title": "The shape the particles are emitted from",
-                    "description": "0 = circle,\n1 = square",
-                    "enum": [
-                        0,
-                        1
-                    ]
-                },
-                "emissionShapeSize": {
-                    "$ref": "#/$defs/Vector2",
-                    "title": "The size of the shape particles are emitted from"
-                },
-                "sortingOrder": {
-                    "type": "integer",
-                    "title": "The sorting order. Higher gets rendered above lower."
-                }
-            },
-            "required": [
-                "name",
-                "localPosition",
-                "lifeTime",
-                "sizeStart",
-                "speedStart",
-                "colorStart",
-                "emissionRateOverDistance",
-                "emisionRateOverTime",
-                "emissionShape",
-                "emissionShapeSize",
-                "sortingOrder"
-            ]
-        },
-        "Turret": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                },
-                "angleLimitLeft": {
-                    "type": "integer",
-                    "title": "Left rotation limit"
-                },
-                "angleLimitRight": {
-                    "type": "integer",
-                    "title": "right rotation limit"
-                },
-                "rotationSpeed": {
-                    "type": "integer",
-                    "title": "Rotation speed of the turret"
-                }
-            },
-            "required": [
-                "enabled",
-                "angleLimitLeft",
-                "angleLimitRight",
-                "rotationSpeed"
-            ]
-        },
-        "WeaponMount": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                },
-                "slotId": {
-                    "type": "integer",
-                    "title": "Should be the index of a weapon slot defined \"weaponSlots\".",
-                    "description": "Index count starts at 0.",
-                    "minimum": 0
-                },
-                "flipWeapon": {
-                    "type": "boolean",
-                    "title": "Mirrors the weapon",
-                    "description": "As a general rule, weaponMounts on the right side of the vehicle should have this set to true"
-                },
-                "sortingOrder": {
-                    "type": "integer",
-                    "title": "Similar to sprite sorting order."
-                }
-            },
-            "required": [
-                "enabled",
-                "slotId",
-                "flipWeapon",
-                "sortingOrder"
-            ]
-        },
-        "ModuleMount": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                },
-                "mountId": {
-                    "type": "integer",
-                    "title": "The index of the moduleGroup defined in \"vehicleModules\""
-                },
-                "slotId": {
-                    "type": "integer",
-                    "title": "The index of the module slot",
-                    "description": "Can be left at 0 in most cases, unless the relevant module group has more than 1 slot",
-                    "minimum": 0
-                },
-                "sortingOrder": {
-                    "type": "integer",
-                    "title": "Similar to sprite sorting order."
-                }
-            },
-            "required": [
-                "enabled",
-                "mountId",
-                "slotId",
-                "sortingOrder"
-            ]
-        },
-        "CollisionDamage": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                },
-                "collisionDamage": {
-                    "type": "boolean",
-                    "title": "If true, collisions can deal damage"
-                },
-                "collisionDestruction": {
-                    "type": "boolean",
-                    "title": "If true, collision can destroy walls",
-                    "description": "Also requires a \"destroyer\""
-                },
-                "damageModifier": {
-                    "type": "number",
-                    "title": "Multiplier on collision damage"
-                }
-            },
-            "required": [
-                "enabled",
-                "collisionDamage",
-                "collisionDestruction",
-                "damageModifier"
-            ]
-        },
-        "Destroyer": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                },
-                "radius": {
-                    "type": "number",
-                    "title": "Destruction radius"
-                },
-                "force": {
-                    "type": "number",
-                    "title": "Destruction strength",
-                    "description": "If destruction will happen, and the exact radius size is based, in part, on the destroyer's force, and the destructible's resistance."
-                }
-            },
-            "required": [
-                "enabled",
-                "radius",
-                "force"
-            ]
-        },
-        "Vector2": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "x": {
-                    "type": "number"
-                },
-                "y": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "x",
-                "y"
-            ]
-        },
-        "Color": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "r": {
-                    "type": "number"
-                },
-                "g": {
-                    "type": "number"
-                },
-                "b": {
-                    "type": "number"
-                },
-                "a": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "r",
-                "g",
-                "b",
-                "a"
-            ]
-        }
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mech_havoc/vehicle",
+  "type": "object",
+  "properties": {
+    "vehicle": {
+      "$ref": "#/$defs/Vehicle"
     }
+  },
+  "required": [
+    "vehicle"
+  ],
+  "$defs": {
+    "Vehicle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string",
+          "title": "Unlock ID, try to make it unique"
+        },
+        "parentUnlockId": {
+          "type": "string",
+          "title": "Setting this to another item's unlock ID, will require unlocking the other item first before making this mod available",
+          "description": "You can reference an other workshop item's id for this. However it must then also include the prefix \"modNode:\".\nAs an example, to set the Badger-ex as the parent unlock, you must add: \"parentUnlockId\": \"modNode:Badger-ex\""
+        },
+        "name": {
+          "type": "string",
+          "title": "In-game display name"
+        },
+        "description": {
+          "type": "string",
+          "title": "In-game item description"
+        },
+        "shortDescription": {
+          "type": "string",
+          "title": "Short blurb used in compact UI"
+        },
+        "maxHp": {
+          "type": "integer",
+          "title": "Default max vehicle health"
+        },
+        "armor": {
+          "type": "integer",
+          "title": "Default vehicle armor",
+          "description": "Not yet implemented"
+        },
+        "weight": {
+          "type": "number",
+          "title": "Vehicle mass, higher = heavier"
+        },
+        "linearDamping": {
+          "type": "number",
+          "title": "Movement drag, higher = sluggish and harder to push around"
+        },
+        "angularDamping": {
+          "type": "number",
+          "title": "Turn drag, higher = rotation less impact from physics forces, such as recoil"
+        },
+        "salvageCost": {
+          "type": "integer",
+          "title": "Unlock cost (Salvage)"
+        },
+        "plasteelCost": {
+          "type": "integer",
+          "title": "Unlock cost (Plasteel)"
+        },
+        "redMercuryCost": {
+          "type": "integer",
+          "title": "Unlock cost (Red Mercury)"
+        },
+        "computroniumCost": {
+          "type": "integer",
+          "title": "Unlock cost (Computronium)"
+        },
+        "previewOutline": {
+          "type": "string",
+          "title": "PNG file name for preview image"
+        },
+        "preview32": {
+          "type": "string",
+          "title": "PNG file name for small preview (32x32 pixels)"
+        },
+        "mechController": {
+          "$ref": "#/$defs/MechController",
+          "title": "Movement controller for mechs",
+          "description": "Only 1 vehicle controller should be added. This will also define the vehicle type"
+        },
+        "trackedController": {
+          "$ref": "#/$defs/TrackedController",
+          "title": "Movement controller for tracked vehicles"
+        },
+        "wheeledController": {
+          "$ref": "#/$defs/WheeledController",
+          "title": "Movement controller for wheeled vehicles"
+        },
+        "hoverController": {
+          "$ref": "#/$defs/HoverController",
+          "title": "Movement controller for hover vehicles"
+        },
+        "vehicleModifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VehicleModifier"
+          },
+          "title": "Vehicle modifiers"
+        },
+        "vehicleModules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VehicleModule"
+          },
+          "title": "Defines the vehicle's module slots"
+        },
+        "weaponSlots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WeaponSlot"
+          },
+          "title": "List of weapon slots",
+          "description": "A weaponMount with matching slotId must also be added to allow the weapon to spawn"
+        },
+        "limbs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Limb"
+          },
+          "title": "Feet/legs settings for mechs",
+          "description": "Should only be added when also making use of the mechController"
+        },
+        "node": {
+          "$ref": "#/$defs/VehicleNode",
+          "title": "Vehicle object root. In the case of mechs, this would usually be the lower body",
+          "description": "Other vehicles generally don't have a split between upper/lower body, so this would just be the main body of the vehicle"
+        }
+      },
+      "required": [
+        "version",
+        "id",
+        "name",
+        "description",
+        "shortDescription",
+        "maxHp",
+        "armor",
+        "weight",
+        "linearDamping",
+        "angularDamping",
+        "previewOutline",
+        "preview32",
+        "vehicleModifiers",
+        "vehicleModules",
+        "weaponSlots",
+        "limbs",
+        "node"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "mechController"
+          ]
+        },
+        {
+          "required": [
+            "trackedController"
+          ]
+        },
+        {
+          "required": [
+            "wheeledController"
+          ]
+        },
+        {
+          "required": [
+            "hoverController"
+          ]
+        }
+      ]
+    },
+    "MechController": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "engineForce": {
+          "type": "number",
+          "title": "Main movement force. Higher = faster acceleration and higher max speed"
+        },
+        "strafeModifier": {
+          "type": "number",
+          "title": "Strafe speed vs forward speed. 1 = same, <1= slower"
+        },
+        "limbMoveDistance": {
+          "type": "number",
+          "title": "How far from the resting position limbs will try to step while moving"
+        },
+        "velocityModifier": {
+          "type": "number",
+          "title": "Modifier to limbMoveDistance, based on mech velocity",
+          "description": "This value is commonly somewhere around 0.6"
+        }
+      },
+      "required": [
+        "engineForce",
+        "strafeModifier",
+        "limbMoveDistance",
+        "velocityModifier"
+      ]
+    },
+    "TrackedController": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "engineForce": {
+          "type": "number",
+          "title": "Main movement force. Higher = faster acceleration and higher max speed"
+        },
+        "turnForce": {
+          "type": "number",
+          "title": "Rotational force when trying to turn"
+        },
+        "engineAudioVolume": {
+          "type": "number",
+          "title": "Audio volume of the vehicle's engine sound",
+          "description": "Advised to keep this between 0 and 1"
+        },
+        "tracksAudioVolume": {
+          "type": "number",
+          "title": "Audio volume of the vehicles tracks sound, heard while moving",
+          "description": "Advised to keep this between 0 and 1"
+        }
+      },
+      "required": [
+        "engineForce",
+        "turnForce",
+        "engineAudioVolume",
+        "tracksAudioVolume"
+      ]
+    },
+    "WheeledController": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "engineForce": {
+          "type": "number",
+          "title": "Main movement force. Higher = faster acceleration and higher max speed"
+        },
+        "turnForce": {
+          "type": "number",
+          "title": "Rotational force when trying to turn"
+        },
+        "driftFactor": {
+          "type": "number",
+          "title": "Modifier of vehicle velocity to the left or right. Setting it at 0 will result in a vehicle that only moves in its steering direction. While a value of 1 will result in a slidey car",
+          "description": "0.99 is a good default value. Should stick between 0 and 1, unless you want some interesting bugs"
+        },
+        "engineAudioVolume": {
+          "type": "number",
+          "title": "Audio volume of the vehicle's engine sound",
+          "description": "Advised to keep this between 0 and 1"
+        }
+      },
+      "required": [
+        "engineForce",
+        "turnForce",
+        "driftFactor",
+        "engineAudioVolume"
+      ]
+    },
+    "HoverController": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "engineForce": {
+          "type": "number",
+          "title": "Main movement force. Higher = faster acceleration and higher max speed"
+        },
+        "strafeModifier": {
+          "type": "number",
+          "title": "Strafe speed vs forward speed. 1 = same, <1= slower"
+        },
+        "engineAudioVolume": {
+          "type": "number",
+          "title": "Audio volume of the vehicle's hover sound effect",
+          "description": "Advised to keep this between 0 and 1"
+        }
+      },
+      "required": [
+        "engineForce",
+        "strafeModifier",
+        "engineAudioVolume"
+      ]
+    },
+    "VehicleModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "title": "Defines which modifier",
+          "description": "0 - None\n1 - RearmSpeed (0.25 = +25%)\n2 - RewardMultiplier (1.25 = +25%)\n3 - IntegratedAPS (deprecated)\n4 - IntegratedTurret (deprecated)\n5 - AblativeArmor (has no function)\n6 - DozerBladers (has no function)\n7 - ReloadSpeed (0.25 = +25%)\n8 - RadarRange (25 = +25m)",
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "x-enumTitles": [
+            "None",
+            "RearmSpeed (0.25 = +25%)",
+            "RewardMultiplier (1.25 = +25%)",
+            "IntegratedAPS (deprecated)",
+            "IntegratedTurret (deprecated)",
+            "AblativeArmor (has no function)",
+            "DozerBladers (has no function)",
+            "ReloadSpeed (0.25 = +25%)",
+            "RadarRange (25 = +25m)"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "title": "value of the modifier"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    "WeaponModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "title": "Defines which modifier",
+          "description": "0 - None\n1 - RearmSpeed (0.25 = +25%)\n2 - Recoil (0.25 = +25%)",
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "x-enumTitles": [
+            "None",
+            "RearmSpeed (0.25 = +25%)",
+            "Recoil (0.25 = +25%)"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "title": "value of the modifier"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    "VehicleModule": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "title": "Determines the module group type",
+          "description": "0 - Body\n1 - Chassis\n2 - Armor\n3 - Systems\n4 - WeaponSystems\n5 - Mount",
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "x-enumTitles": [
+            "Body",
+            "Chassis",
+            "Armor",
+            "Systems",
+            "WeaponSystems",
+            "Mount"
+          ]
+        },
+        "slots": {
+          "type": "integer",
+          "minimum": 0,
+          "title": "The amount of modules that can be equipped to this module group"
+        },
+        "previewPosition": {
+          "$ref": "#/$defs/Vector2",
+          "title": "UI preview position in the loadout screen"
+        }
+      },
+      "required": [
+        "type",
+        "slots"
+      ]
+    },
+    "WeaponSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowedTypes": {
+          "type": "array",
+          "title": "Allowed weapon types",
+          "items": {
+            "type": "integer",
+            "description": "0 - Ballistic\n1 - Rocket\n2 - Experimental",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "x-enumTitles": [
+              "Ballistic",
+              "Rocket",
+              "Experimental"
+            ]
+          }
+        },
+        "allowedSizes": {
+          "type": "array",
+          "title": "Allowed weapon sizes",
+          "items": {
+            "type": "integer",
+            "description": "0 - Portable\n1 - Small\n2 - Medium\n3 - Large\n4 - Titan",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "x-enumTitles": [
+              "Portable",
+              "Small",
+              "Medium",
+              "Large",
+              "Titan"
+            ]
+          }
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WeaponModifier"
+          }
+        },
+        "previewPosition": {
+          "$ref": "#/$defs/Vector2",
+          "title": "UI preview position in the loadout screen"
+        }
+      },
+      "required": [
+        "allowedTypes",
+        "allowedSizes",
+        "previewPosition"
+      ]
+    },
+    "Limb": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "limbGroup": {
+          "type": "integer",
+          "title": "Group index for alternating step patterns",
+          "description": "Should either be 0 or 1",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "moveDuration": {
+          "type": "number",
+          "title": "Time for a step to complete"
+        },
+        "maxDistance": {
+          "type": "number",
+          "title": "How far a limb can be from its target position",
+          "description": "If distance > maxDistance: try to move limb to target position"
+        },
+        "sprite": {
+          "$ref": "#/$defs/Sprite"
+        },
+        "localPosition": {
+          "$ref": "#/$defs/Vector2",
+          "title": "Starting and resting position of the limb"
+        }
+      },
+      "required": [
+        "limbGroup",
+        "moveDuration",
+        "maxDistance",
+        "sprite",
+        "localPosition"
+      ]
+    },
+    "VehicleNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Node name",
+          "description": "Mainly for your own sanity"
+        },
+        "usedForSteeringWheel": {
+          "type": "boolean",
+          "title": "Whether this node should act as a \"steering wheel\", rotating toward your steering direction",
+          "description": "Only relevant when using the wheeledController"
+        },
+        "localPosition": {
+          "title": "Position, relative to parent node"
+        },
+        "localRotation": {
+          "type": "number",
+          "title": "Rotation relative to parent node"
+        },
+        "localScale": {
+          "$ref": "#/$defs/Vector2",
+          "title": "Scale relative to parent node"
+        },
+        "sortingGroup": {
+          "type": "integer",
+          "title": "SortingGroup order. Higher gets rendered above lower",
+          "description": "Optional. Should generally only be defined for the root node"
+        },
+        "sprites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sprite"
+          },
+          "title": "Visuals attached to this sprite (see sprite below)",
+          "description": "Optional"
+        },
+        "trailRenderers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TrailRenderer"
+          },
+          "title": "Visual effect",
+          "description": "Optional"
+        },
+        "particleEmitters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParticleEmitter"
+          },
+          "title": "Visual effect",
+          "description": "Optional"
+        },
+        "turret": {
+          "$ref": "#/$defs/Turret",
+          "title": "Turret handler, will rotate the node towards your aimpoint",
+          "description": "Optional"
+        },
+        "weaponMount": {
+          "$ref": "#/$defs/WeaponMount",
+          "title": "Where a weapon is spawned for a given \"weaponSlots\" index",
+          "description": "Optional. Index count starts at 0"
+        },
+        "moduleMount": {
+          "$ref": "#/$defs/ModuleMount",
+          "title": "Used for spawning equipped module objects. Similar to the weaponMount",
+          "description": "Optional. Index count starts at 0.\nOnly relevant for modules of the \"Mounted\" type, as other modules don't require a spawned object"
+        },
+        "hasCollider": {
+          "type": "boolean",
+          "title": "Set to true if a collider should be added to this node. Must also contain a sprite with usedForCollider set to true",
+          "description": "Optional"
+        },
+        "collisionDamage": {
+          "$ref": "#/$defs/CollisionDamage",
+          "title": "Collision damage settings",
+          "description": "Optional. Should also have hasCollider set to true"
+        },
+        "destroyer": {
+          "$ref": "#/$defs/Destroyer",
+          "title": "Handles destruction of wall on collision",
+          "description": "Optional. Should also have collisionDamage set to function properly"
+        },
+        "childrenNodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VehicleNode"
+          },
+          "title": "An array of child nodes (recursive)",
+          "description": "Optional"
+        }
+      },
+      "required": [
+        "name",
+        "localPosition"
+      ]
+    },
+    "Sprite": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Sprite name",
+          "description": "Mainly for your own sanity"
+        },
+        "usedForCollider": {
+          "type": "boolean",
+          "title": "Whether a collider should use this sprite's shape as a reference."
+        },
+        "usedForSteeringWheel": {
+          "type": "boolean",
+          "title": "Whether this sprite should act as a \"steering wheel\", rotating toward your steering direction",
+          "description": "Only relevant when using the wheeledController"
+        },
+        "localPosition": {
+          "$ref": "#/$defs/Vector2",
+          "title": "Position, relative to parent node."
+        },
+        "localRotation": {
+          "type": "number",
+          "title": "Rotation relative to parent node."
+        },
+        "localScale": {
+          "$ref": "#/$defs/Vector2",
+          "title": "Scale relative to parent node."
+        },
+        "spritePath": {
+          "type": "string",
+          "title": "PNG file name in the mod's folder."
+        },
+        "color": {
+          "$ref": "#/$defs/Color",
+          "title": "Change the sprite color.",
+          "description": "Optional.\nMost commonly used for \"energySprites\", such as a bright cockpit. That are by default white and have their material set to 1. Color is then used to tweak the energy color."
+        },
+        "sortingOrder": {
+          "type": "integer",
+          "title": "The sprite sorting order. Higher gets rendered above lower."
+        },
+        "material": {
+          "type": "integer",
+          "title": "sprite material",
+          "description": "0 = default,\n1 = glow material",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "spritePath"
+      ]
+    },
+    "TrailRenderer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Trail name",
+          "description": "Mainly for your own sanity"
+        },
+        "localPosition": {
+          "$ref": "#/$defs/Vector2",
+          "title": "Position, relative to parent node."
+        },
+        "time": {
+          "type": "number",
+          "title": "How long the trail takes to fade out"
+        },
+        "widthStart": {
+          "type": "number",
+          "title": "Width of the trail at its start point"
+        },
+        "widthEnd": {
+          "type": "number",
+          "title": "Width of the trail at its end point"
+        },
+        "colorStart": {
+          "$ref": "#/$defs/Color",
+          "title": "Trail color at its start point"
+        },
+        "colorEnd": {
+          "$ref": "#/$defs/Color",
+          "title": "Trail color at its end point"
+        },
+        "sortingOrder": {
+          "type": "integer",
+          "title": "The sorting order. Higher gets rendered above lower."
+        }
+      },
+      "required": [
+        "name",
+        "localPosition",
+        "time",
+        "widthStart",
+        "widthEnd",
+        "colorStart",
+        "colorEnd",
+        "sortingOrder"
+      ]
+    },
+    "ParticleEmitter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Trail name",
+          "description": "Mainly for your own sanity"
+        },
+        "localPosition": {
+          "$ref": "#/$defs/Vector2",
+          "title": "Position, relative to parent node."
+        },
+        "lifeTime": {
+          "type": "number",
+          "title": "How long the particles take to fade out"
+        },
+        "sizeStart": {
+          "type": "number",
+          "title": "Size of particles"
+        },
+        "speedStart": {
+          "type": "number",
+          "title": "Speed of particles"
+        },
+        "colorStart": {
+          "$ref": "#/$defs/Color",
+          "title": "Color of particles"
+        },
+        "emissionRateOverDistance": {
+          "type": "number",
+          "title": "How many particles are emitted per world unit",
+          "description": "Often used for things like dust tails behind vehicles"
+        },
+        "emisionRateOverTime": {
+          "type": "number",
+          "title": "How many particles are emitted per second"
+        },
+        "emissionShape": {
+          "type": "integer",
+          "title": "The shape the particles are emitted from",
+          "description": "0 = circle,\n1 = square",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "emissionShapeSize": {
+          "$ref": "#/$defs/Vector2",
+          "title": "The size of the shape particles are emitted from"
+        },
+        "sortingOrder": {
+          "type": "integer",
+          "title": "The sorting order. Higher gets rendered above lower."
+        }
+      },
+      "required": [
+        "name",
+        "localPosition",
+        "lifeTime",
+        "sizeStart",
+        "speedStart",
+        "colorStart",
+        "emissionRateOverDistance",
+        "emisionRateOverTime",
+        "emissionShape",
+        "emissionShapeSize",
+        "sortingOrder"
+      ]
+    },
+    "Turret": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "angleLimitLeft": {
+          "type": "integer",
+          "title": "Left rotation limit"
+        },
+        "angleLimitRight": {
+          "type": "integer",
+          "title": "right rotation limit"
+        },
+        "rotationSpeed": {
+          "type": "integer",
+          "title": "Rotation speed of the turret"
+        }
+      },
+      "required": [
+        "enabled",
+        "angleLimitLeft",
+        "angleLimitRight",
+        "rotationSpeed"
+      ]
+    },
+    "WeaponMount": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "slotId": {
+          "type": "integer",
+          "title": "Should be the index of a weapon slot defined \"weaponSlots\".",
+          "description": "Index count starts at 0.",
+          "minimum": 0
+        },
+        "flipWeapon": {
+          "type": "boolean",
+          "title": "Mirrors the weapon",
+          "description": "As a general rule, weaponMounts on the right side of the vehicle should have this set to true"
+        },
+        "sortingOrder": {
+          "type": "integer",
+          "title": "Similar to sprite sorting order."
+        }
+      },
+      "required": [
+        "enabled",
+        "slotId",
+        "flipWeapon",
+        "sortingOrder"
+      ]
+    },
+    "ModuleMount": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "mountId": {
+          "type": "integer",
+          "title": "The index of the moduleGroup defined in \"vehicleModules\""
+        },
+        "slotId": {
+          "type": "integer",
+          "title": "The index of the module slot",
+          "description": "Can be left at 0 in most cases, unless the relevant module group has more than 1 slot",
+          "minimum": 0
+        },
+        "sortingOrder": {
+          "type": "integer",
+          "title": "Similar to sprite sorting order."
+        }
+      },
+      "required": [
+        "enabled",
+        "mountId",
+        "slotId",
+        "sortingOrder"
+      ]
+    },
+    "CollisionDamage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "collisionDamage": {
+          "type": "boolean",
+          "title": "If true, collisions can deal damage"
+        },
+        "collisionDestruction": {
+          "type": "boolean",
+          "title": "If true, collision can destroy walls",
+          "description": "Also requires a \"destroyer\""
+        },
+        "damageModifier": {
+          "type": "number",
+          "title": "Multiplier on collision damage"
+        }
+      },
+      "required": [
+        "enabled",
+        "collisionDamage",
+        "collisionDestruction",
+        "damageModifier"
+      ]
+    },
+    "Destroyer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "radius": {
+          "type": "number",
+          "title": "Destruction radius"
+        },
+        "force": {
+          "type": "number",
+          "title": "Destruction strength",
+          "description": "If destruction will happen, and the exact radius size is based, in part, on the destroyer's force, and the destructible's resistance."
+        }
+      },
+      "required": [
+        "enabled",
+        "radius",
+        "force"
+      ]
+    },
+    "Vector2": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "Color": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "r": {
+          "type": "number"
+        },
+        "g": {
+          "type": "number"
+        },
+        "b": {
+          "type": "number"
+        },
+        "a": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "r",
+        "g",
+        "b",
+        "a"
+      ]
+    }
+  }
 }
